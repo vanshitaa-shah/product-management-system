@@ -1,7 +1,7 @@
-const alertDisplay=document.getElementById("alertDisplay");
+const alertDisplay = document.getElementById("alertDisplay");
 
 // Form Validation Function
-export default function isValid(name, price,photo) {
+export default function isValid(name, price, photo) {
   if (name == "" || name.trim() == "") {
     showAlert("please enter name.");
     return false;
@@ -11,7 +11,10 @@ export default function isValid(name, price,photo) {
   } else if (price.includes("e")) {
     showAlert("please enter valid price");
     return false;
-  }else if(!isFileValid(photo)){
+  } else if (price == "" || price.trim() == "") {
+    showAlert("please enter price.");
+    return false;
+  } else if (!isFileValid(photo)) {
     return false;
   }
   return true;
@@ -23,8 +26,8 @@ function isFileValid(productPhoto) {
   const extFile = productPhoto.value
     .substr(idxDot, productPhoto.value.length)
     .toLowerCase();
-  if(extFile===""){
-    return true
+  if (extFile === "") {
+    return true;
   }
   if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
     if (productPhoto.files[0].size > 200000) {
