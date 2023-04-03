@@ -40,6 +40,10 @@ i {
 }
 
 /* custom CSS */
+#parentContainer{
+  cursor: default;
+}
+
 .main-container {
   width: 500px;
   cursor: default;
@@ -106,6 +110,10 @@ tbody {
   font-size: 80%;
   width: fit-content;
   background-color: aqua;
+}
+
+:disabled {
+  cursor: not-allowed;
 }
 
 ::-webkit-scrollbar {

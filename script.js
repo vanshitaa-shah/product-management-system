@@ -43,7 +43,7 @@ form.addEventListener("submit", (e) => {
         name: prdName.value,
         desc: description.value,
         price: prdPrice.value,
-        image: imgUrl === "" ? "./images/img-2.png" : imgUrl,
+        image: imgUrl === "" ? "./src/images/img.png" : imgUrl,
       });
 
       localStorage.setItem("productList", JSON.stringify(productList));
@@ -51,7 +51,10 @@ form.addEventListener("submit", (e) => {
       form.reset();
       getDataFromLocal();
       imgUrl = "";
-      imgPreview.src = "./images/img-2.png";
+      imgPreview.src = "./src/images/img.png";
+    }
+    else{
+      imgPreview.src = "./src/images/img.png"
     }
 });
 
@@ -60,7 +63,7 @@ form.addEventListener("submit", (e) => {
 resetBtn.addEventListener("click", (e) => {
   e.preventDefault();
   form.reset("");
-  imgPreview.src = "./images/img-2.png";
+  imgPreview.src = "./src/images/img.png";
 });
 
 // Render function for productList body

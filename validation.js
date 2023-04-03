@@ -30,13 +30,11 @@ function isFileValid(productPhoto) {
     if (productPhoto.files[0].size > 200000) {
       showAlert("File should be <200KB");
       productPhoto.value = "";
-      imgPreview.src = "./images/img-2.png";
       return false;
     }
   } else {
     showAlert("Only jpg/jpeg and png files are allowed!");
     productPhoto.value = "";
-    imgPreview.src = "./images/img-2.png";
     return false;
   }
   return true;
@@ -48,5 +46,5 @@ function showAlert(msg) {
   alertDisplay.value = " ! " + msg;
   setTimeout(() => {
     alertDisplay.classList.add("invisible");
-  }, 1500);
+  }, 2000);
 }

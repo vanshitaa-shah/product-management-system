@@ -37,14 +37,14 @@ backBtn.parentElement.href = "./index.html";
 editBtn.addEventListener("click", () => {
   heading.innerHTML = "Update Product";
   const formFields = document.querySelectorAll("input,textarea");
-  for (let field of formFields) field.removeAttribute("readonly");
+  for (let field of formFields) field.removeAttribute("disabled");
   allBtnHandler();
 });
 
 // Cancel Button eventListener
 cancelBtn.addEventListener("click", () => {
   const formFields = document.querySelectorAll("input,textarea");
-  for (let field of formFields) field.readOnly = true;
+  for (let field of formFields) field.disabled = true;
   allBtnHandler();
   prdName.value = productData[0].name;
   description.value = productData[0].desc;
@@ -71,8 +71,8 @@ productPhoto.addEventListener("change", (e) => {
 let imgUrl = productData[0].image;
 updateBtn.addEventListener("click", (e) => {
   e.preventDefault();
+  let index = productList.findIndex((product) => product.id == productID);
   if(isValid(prdName.value,price.value,productPhoto)){
-    let index = productList.findIndex((product) => product.id == productID);
     const updateCheck=JSON.parse(JSON.stringify(productList[index]));
     productList[index].name = prdName.value;
     productList[index].desc = description.value;
@@ -82,7 +82,7 @@ updateBtn.addEventListener("click", (e) => {
         localStorage.setItem("productList", JSON.stringify(productList));
         swal("Product Details Updated!", "", "success");
         const formFields = document.querySelectorAll("input,textarea");
-        for (let field of formFields) field.readOnly = true;
+        for (let field of formFields) field.disabled = true;
         allBtnHandler();
         imagePreview.src = productList[index].image;
         heading.innerHTML = "view Product";
@@ -90,6 +90,9 @@ updateBtn.addEventListener("click", (e) => {
     else{
       swal("No update found!", "", "warning");
     }
+  }
+  else{
+    imagePreview.src=productList[index].image;
   }
 });
 
