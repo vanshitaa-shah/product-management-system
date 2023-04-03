@@ -1,4 +1,4 @@
-// import validate from "./validation.js";
+import isValid from "./validation.js";
 const prdName = document.getElementById("productName");
 const description = document.getElementById("productDescription");
 const prdPrice = document.getElementById("productPrice");
@@ -15,9 +15,7 @@ let productList = [];
 if (localStorage.getItem("productList") != null) {
   productList = JSON.parse(localStorage.getItem("productList"));
 }
-
 productPhoto.addEventListener("change", (e) => {
-  if (isFileValid()) {
     let fReader = new FileReader();
     fReader.onload = (e) => {
       imgUrl = e.target.result;
@@ -26,68 +24,28 @@ productPhoto.addEventListener("change", (e) => {
     const img = URL.createObjectURL(e.target.files[0]);
     const imgPreview = document.getElementById("imgPreview");
     imgPreview.src = img;
-  }
 });
 
-function isFileValid() {
-  const idxDot = productPhoto.value.lastIndexOf(".") + 1;
-  const extFile = productPhoto.value
-    .substr(idxDot, productPhoto.value.length)
-    .toLowerCase();
-  if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
-    if (productPhoto.files[0].size > 1000000) {
-      alert("File size should be <1MB");
-      productPhoto.value = "";
-      imgPreview.src = "./images/img-2.png";
-      return false;
-    }
-  } else {
-    alert("Only jpg/jpeg and png files are allowed!");
-    productPhoto.value = "";
-    imgPreview.src = "./images/img-2.png";
-    return false;
-  }
-  return true;
-}
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log(prdName.value);
-  console.log(typeof prdName.value);
-  if (isValidate()) {
-    console.log(isValidate());
-    productList.push({
-      id: Math.floor((Math.random() * Date.now()) / 10000000),
-      name: prdName.value,
-      desc: description.value,
-      price: prdPrice.value,
-      image: imgUrl === "" ? "./images/img-2.png" : imgUrl,
-    });
-    localStorage.setItem("productList", JSON.stringify(productList));
-    swal("Product Uploaded!", "", "success");
-    form.reset();
-    getDataFromLocal();
-    imgUrl = "";
-    imgPreview.src = "./images/img-2.png";
-  }
+    if(isValid(prdName.value,prdPrice.value,productPhoto)) {
+      productList.push({
+        id: Math.floor((Math.random() * Date.now()) / 10000000),
+        name: prdName.value,
+        desc: description.value,
+        price: prdPrice.value,
+        image: imgUrl === "" ? "./images/img-2.png" : imgUrl,
+      });
+      localStorage.setItem("productList", JSON.stringify(productList));
+      swal("Product Uploaded!", "", "success");
+      form.reset();
+      getDataFromLocal();
+      imgUrl = "";
+      imgPreview.src = "./images/img-2.png";
+    }
+  
 });
-
-function isValidate() {
-  if (prdName.value == "" || prdName.value.trim() == "") {
-    console.log("here");
-    return false;
-  } else if (!prdName.value.match(/^[A-Za-z_][ A-Za-z0-9_/()-]*$/)) {
-    alert("Name should not contain any such characters");
-    return false;
-  }
-
-  if (prdPrice.value.match(/[e]/)) {
-    alert("please enter valid price");
-    return false;
-  }
-
-  return true;
-}
 
 resetBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -128,7 +86,6 @@ const getDataFromLocal = () => {
   // delete code
   let btn;
   const allDelBtns = document.querySelectorAll(".del-btn");
-  console.log(allDelBtns);
   for (btn of allDelBtns) {
     btn.addEventListener("click", (e) => {
       const productRow = e.target.parentElement.parentElement;
@@ -157,12 +114,9 @@ window.onload = getDataFromLocal();
 //debouncing for search filter
 function searchBarHandler() {
   let tr = products.querySelectorAll("tr");
-  console.log(tr);
   let searchVal = searchBar.value.toLowerCase();
-  console.log(searchVal);
   for (let row of tr) {
     let td = row.getElementsByTagName("TD")[0];
-    console.log(td);
     if (td.innerHTML.toLowerCase().indexOf(searchVal) > -1) {
       row.style.display = "";
     } else {
@@ -175,7 +129,6 @@ function debounce(func, delay) {
   return function () {
     clearTimeout(timeId);
     timeId = setTimeout(() => {
-      console.log("abc");
       func();
     }, delay);
   };
@@ -185,7 +138,6 @@ searchBar.addEventListener("input", debounce(searchBarHandler, 300));
 
 //sorting
 const sortFeilds = document.querySelectorAll("th i");
-console.log(sortFeilds);
 sortFeilds.forEach((feild) => {
   feild.addEventListener("click", (e) => {
     let column = feild.getAttribute("data-column");
@@ -198,7 +150,6 @@ sortFeilds.forEach((feild) => {
         else return Number(a[column]) > Number(b[column]) ? 1 : -1;
       });
       getDataFromLocal();
-      console.log(feild.getAttribute("data-order"));
     } else {
       feild.setAttribute("data-order", "desc");
       productList.sort((a, b) => {

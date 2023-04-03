@@ -47,6 +47,7 @@ h5 {
 .main-container {
   width: 500px;
   cursor: default;
+  position: relative;
 }
 /* .main-container input,
 .main-container textarea {
@@ -99,6 +100,15 @@ tbody {
 
 .feature-btn i {
   pointer-events: none;
+}
+
+#alertDisplay{
+  position: absolute;
+  color: rgb(215, 72, 72);
+  top: 15%;
+  font-size: 80%;
+  width: fit-content;
+  background-color: aqua;
 }
 
 ::-webkit-scrollbar {

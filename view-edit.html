@@ -24,12 +24,15 @@
     />
     <link rel="stylesheet" href="style.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./view-edit.js" type="module"></script>
+    <script src="./validation.js" type="module"></script>
   </head>
   <body>
     <div class="container vh-100 vw-100">
-      <h2 class="text-white text-center mt-3 fw-bold">View Product</h2>
-      <div class="container main-container mt-5 bg-body-tertiary p-3">
+      <h3 class="text-white text-center mt-3 fw-bold">View Product</h3>
+      <div class="container main-container mt-1 bg-body-tertiary p-3">
         <h3 class="text-center">Product Info</h3>
+        <input id="alertDisplay" class="invisible bg-transparent fs-6" readonly type="text">
         <div class="text-center">
           <img
             id="imgPreview"
@@ -39,6 +42,7 @@
             alt=""
           />
         </div>
+        <form id="productForm" autocomplete="off">
         <div class="row mt-5">
           <div class="form-group col mb-3">
             <label for="productName">Name<span>*</span></label>
@@ -84,20 +88,21 @@
               name="photo"
               id="productPhoto"
               class="form-control w-100"
+              readonly
             />
           </div>
           <div
             class="col-lg-12 mt-2 d-flex justify-content-center align-items-center"
           >
-            <button class="btn btn-primary me-3" id="editBtn">Edit</button>
+            <button class="btn btn-primary me-3" type="button" id="editBtn">Edit</button>
             <button
               class="btn btn-primary me-3 d-none"
-              type="submit"
+              type="button"
               id="updateBtn"
             >
               Update
             </button>
-            <button id="cancelBtn" class="btn btn-primary d-none">
+            <button id="cancelBtn" type="button" class="btn btn-primary d-none">
               cancel
             </button>
             <a href="">
@@ -105,6 +110,7 @@
             </a>
           </div>
         </div>
+      </form>
       </div>
     </div>
     <script
@@ -112,6 +118,5 @@
       integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
       crossorigin="anonymous"
     ></script>
-    <script src="./view-edit.js"></script>
   </body>
 </html>
