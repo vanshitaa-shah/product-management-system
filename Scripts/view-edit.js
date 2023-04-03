@@ -51,53 +51,50 @@ cancelBtn.addEventListener("click", () => {
   price.value = productData[0].price;
   imagePreview.src = productData[0].image;
   heading.innerHTML = "View Product";
-  productPhoto.value="";
+  productPhoto.value = "";
 });
 
 // Product Photo upload eventListener
 productPhoto.addEventListener("change", (e) => {
-    let fReader = new FileReader();
-    fReader.onload = (e) => {
-      imgUrl = e.target.result;
-    };
-    fReader.readAsDataURL(productPhoto.files[0]);
+  let fReader = new FileReader();
+  fReader.onload = (e) => {
+    imgUrl = e.target.result;
+  };
+  fReader.readAsDataURL(productPhoto.files[0]);
   const img = URL.createObjectURL(e.target.files[0]);
   const imgPreview = document.getElementById("imgPreview");
   imgPreview.src = img;
 });
-
 
 // Update Button eventListener
 let imgUrl = productData[0].image;
 updateBtn.addEventListener("click", (e) => {
   e.preventDefault();
   let index = productList.findIndex((product) => product.id == productID);
-  if(isValid(prdName.value,price.value,productPhoto)){
-    const updateCheck=JSON.parse(JSON.stringify(productList[index]));
+  if (isValid(prdName.value, price.value, productPhoto)) {
+    const updateCheck = JSON.parse(JSON.stringify(productList[index]));
     productList[index].name = prdName.value;
     productList[index].desc = description.value;
     productList[index].price = price.value;
     productList[index].image = imgUrl;
-    if(JSON.stringify(updateCheck) !==JSON.stringify(productList[index])){ 
-        localStorage.setItem("productList", JSON.stringify(productList));
-        swal("Product Details Updated!", "", "success");
-        const formFields = document.querySelectorAll("input,textarea");
-        for (let field of formFields) field.disabled = true;
-        allBtnHandler();
-        imagePreview.src = productList[index].image;
-        heading.innerHTML = "view Product";
-    }
-    else{
+    if (JSON.stringify(updateCheck) !== JSON.stringify(productList[index])) {
+      localStorage.setItem("productList", JSON.stringify(productList));
+      swal("Product Details Updated!", "", "success");
+      const formFields = document.querySelectorAll("input,textarea");
+      for (let field of formFields) field.disabled = true;
+      allBtnHandler();
+      imagePreview.src = productList[index].image;
+      heading.innerHTML = "view Product";
+    } else {
       swal("No update found!", "", "warning");
     }
-  }
-  else{
-    imagePreview.src=productList[index].image;
+  } else {
+    imagePreview.src = productList[index].image;
   }
 });
 
 // Utility function for button visibility toggle
-function allBtnHandler(){
+function allBtnHandler() {
   photoUpload.classList.toggle("invisible");
   cancelBtn.classList.toggle("d-none");
   updateBtn.classList.toggle("d-none");

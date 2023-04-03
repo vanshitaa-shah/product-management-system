@@ -1,4 +1,4 @@
-// Form validation module 
+// Form validation module
 import isValid from "./validation.js";
 
 // Variable Declaration
@@ -21,41 +21,39 @@ if (localStorage.getItem("productList") != null) {
 
 // Image Upload eventListener
 productPhoto.addEventListener("change", (e) => {
-    let fReader = new FileReader();
+  let fReader = new FileReader();
 
-    fReader.onload = (e) => {
-      imgUrl = e.target.result;
-    };
+  fReader.onload = (e) => {
+    imgUrl = e.target.result;
+  };
 
-    fReader.readAsDataURL(productPhoto.files[0]);
-    const img = URL.createObjectURL(e.target.files[0]);
-    const imgPreview = document.getElementById("imgPreview");
-    imgPreview.src = img;
+  fReader.readAsDataURL(productPhoto.files[0]);
+  const img = URL.createObjectURL(e.target.files[0]);
+  const imgPreview = document.getElementById("imgPreview");
+  imgPreview.src = img;
 });
 
 // Form Submit EventListener
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-    if(isValid(prdName.value,prdPrice.value,productPhoto)) {
+  if (isValid(prdName.value, prdPrice.value, productPhoto)) {
+    productList.push({
+      id: Math.floor((Math.random() * Date.now()) / 10000000),
+      name: prdName.value,
+      desc: description.value,
+      price: prdPrice.value,
+      image: imgUrl === "" ? "../images/img.png" : imgUrl,
+    });
 
-      productList.push({
-        id: Math.floor((Math.random() * Date.now()) / 10000000),
-        name: prdName.value,
-        desc: description.value,
-        price: prdPrice.value,
-        image: imgUrl === "" ? "./src/images/img.png" : imgUrl,
-      });
-
-      localStorage.setItem("productList", JSON.stringify(productList));
-      swal("Product Uploaded!", "", "success");
-      form.reset();
-      getDataFromLocal();
-      imgUrl = "";
-      imgPreview.src = "./src/images/img.png";
-    }
-    else{
-      imgPreview.src = "./src/images/img.png"
-    }
+    localStorage.setItem("productList", JSON.stringify(productList));
+    swal("Product Uploaded!", "", "success");
+    form.reset();
+    getDataFromLocal();
+    imgUrl = "";
+    imgPreview.src = "../images/img.png";
+  } else {
+    imgPreview.src = "../images/img.png";
+  }
 });
 
 // Reset Form eventListener
@@ -63,7 +61,7 @@ form.addEventListener("submit", (e) => {
 resetBtn.addEventListener("click", (e) => {
   e.preventDefault();
   form.reset("");
-  imgPreview.src = "./src/images/img.png";
+  imgPreview.src = "../images/img.png";
 });
 
 // Render function for productList body
@@ -103,7 +101,6 @@ const getDataFromLocal = () => {
   let btn;
   const allDelBtns = document.querySelectorAll(".del-btn");
   for (btn of allDelBtns) {
-    
     btn.addEventListener("click", (e) => {
       const productRow = e.target.parentElement.parentElement;
       const index = productRow.getAttribute("index");
@@ -129,7 +126,6 @@ const getDataFromLocal = () => {
 
 // Function is Called every time page loads.
 window.onload = getDataFromLocal();
-
 
 //debounce function for searching products
 
@@ -157,7 +153,6 @@ function searchBarHandler() {
 }
 
 searchBar.addEventListener("input", debounce(searchBarHandler, 300));
-
 
 //Sorting of products by Name, Id and Price.
 
