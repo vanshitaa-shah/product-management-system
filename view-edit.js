@@ -1,4 +1,7 @@
+// Form Validation Module
 import isValid from "./validation.js";
+
+// Variable Declaration
 const prdName = document.getElementById("productName");
 const description = document.getElementById("productDescription");
 const price = document.getElementById("productPrice");
@@ -16,7 +19,10 @@ if (localStorage.getItem("productList") != null) {
   productList = JSON.parse(localStorage.getItem("productList"));
 }
 
+// Getting the productId from pageUrl
 const productID = new URLSearchParams(window.location.search).get("ProductID");
+
+// Product Details of specific ProductID
 const productData = productList.filter((product) => {
   return product.id == productID;
 });
@@ -26,6 +32,8 @@ price.value = productData[0].price;
 imagePreview.src = productData[0].image;
 
 backBtn.parentElement.href = "./index.html";
+
+// edit button eventListener
 editBtn.addEventListener("click", () => {
   heading.innerHTML = "Update Product";
   const formFields = document.querySelectorAll("input,textarea");
@@ -33,6 +41,7 @@ editBtn.addEventListener("click", () => {
   allBtnHandler();
 });
 
+// Cancel Button eventListener
 cancelBtn.addEventListener("click", () => {
   const formFields = document.querySelectorAll("input,textarea");
   for (let field of formFields) field.readOnly = true;
@@ -45,6 +54,7 @@ cancelBtn.addEventListener("click", () => {
   productPhoto.value="";
 });
 
+// Product Photo upload eventListener
 productPhoto.addEventListener("change", (e) => {
     let fReader = new FileReader();
     fReader.onload = (e) => {
@@ -56,6 +66,8 @@ productPhoto.addEventListener("change", (e) => {
   imgPreview.src = img;
 });
 
+
+// Update Button eventListener
 let imgUrl = productData[0].image;
 updateBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -81,6 +93,7 @@ updateBtn.addEventListener("click", (e) => {
   }
 });
 
+// Utility function for button visibility toggle
 function allBtnHandler(){
   photoUpload.classList.toggle("invisible");
   cancelBtn.classList.toggle("d-none");

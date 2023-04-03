@@ -1,4 +1,6 @@
 const alertDisplay=document.getElementById("alertDisplay");
+
+// Form Validation Function
 export default function isValid(name, price,photo) {
   if (name == "" || name.trim() == "") {
     showAlert("please enter name.");
@@ -15,6 +17,7 @@ export default function isValid(name, price,photo) {
   return true;
 }
 
+// File Format Checker function
 function isFileValid(productPhoto) {
   const idxDot = productPhoto.value.lastIndexOf(".") + 1;
   const extFile = productPhoto.value
@@ -39,6 +42,7 @@ function isFileValid(productPhoto) {
   return true;
 }
 
+// Alert Handler Function
 function showAlert(msg) {
   alertDisplay.classList.remove("invisible");
   alertDisplay.value = " ! " + msg;

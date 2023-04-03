@@ -1,4 +1,7 @@
+// Form validation module 
 import isValid from "./validation.js";
+
+// Variable Declaration
 const prdName = document.getElementById("productName");
 const description = document.getElementById("productDescription");
 const prdPrice = document.getElementById("productPrice");
@@ -15,21 +18,26 @@ let productList = [];
 if (localStorage.getItem("productList") != null) {
   productList = JSON.parse(localStorage.getItem("productList"));
 }
+
+// Image Upload eventListener
 productPhoto.addEventListener("change", (e) => {
     let fReader = new FileReader();
+
     fReader.onload = (e) => {
       imgUrl = e.target.result;
     };
+
     fReader.readAsDataURL(productPhoto.files[0]);
     const img = URL.createObjectURL(e.target.files[0]);
     const imgPreview = document.getElementById("imgPreview");
     imgPreview.src = img;
 });
 
-
+// Form Submit EventListener
 form.addEventListener("submit", (e) => {
   e.preventDefault();
     if(isValid(prdName.value,prdPrice.value,productPhoto)) {
+
       productList.push({
         id: Math.floor((Math.random() * Date.now()) / 10000000),
         name: prdName.value,
@@ -37,6 +45,7 @@ form.addEventListener("submit", (e) => {
         price: prdPrice.value,
         image: imgUrl === "" ? "./images/img-2.png" : imgUrl,
       });
+
       localStorage.setItem("productList", JSON.stringify(productList));
       swal("Product Uploaded!", "", "success");
       form.reset();
@@ -44,8 +53,9 @@ form.addEventListener("submit", (e) => {
       imgUrl = "";
       imgPreview.src = "./images/img-2.png";
     }
-  
 });
+
+// Reset Form eventListener
 
 resetBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -53,8 +63,10 @@ resetBtn.addEventListener("click", (e) => {
   imgPreview.src = "./images/img-2.png";
 });
 
+// Render function for productList body
 const getDataFromLocal = () => {
   let html = "";
+
   productList.forEach((data, index) => {
     html += `<tr index="${index}">\
     <td>${data.id}</td>\
@@ -81,12 +93,14 @@ const getDataFromLocal = () => {
     </td>\
   </tr>`;
   });
+
   products.innerHTML = html;
 
-  // delete code
+  // delete product Row code
   let btn;
   const allDelBtns = document.querySelectorAll(".del-btn");
   for (btn of allDelBtns) {
+    
     btn.addEventListener("click", (e) => {
       const productRow = e.target.parentElement.parentElement;
       const index = productRow.getAttribute("index");
@@ -109,9 +123,23 @@ const getDataFromLocal = () => {
     });
   }
 };
+
+// Function is Called every time page loads.
 window.onload = getDataFromLocal();
 
-//debouncing for search filter
+
+//debounce function for searching products
+
+function debounce(func, delay) {
+  let timeId;
+  return function () {
+    clearTimeout(timeId);
+    timeId = setTimeout(() => {
+      func();
+    }, delay);
+  };
+}
+
 function searchBarHandler() {
   let tr = products.querySelectorAll("tr");
   let searchVal = searchBar.value.toLowerCase();
@@ -124,19 +152,12 @@ function searchBarHandler() {
     }
   }
 }
-function debounce(func, delay) {
-  let timeId;
-  return function () {
-    clearTimeout(timeId);
-    timeId = setTimeout(() => {
-      func();
-    }, delay);
-  };
-}
 
 searchBar.addEventListener("input", debounce(searchBarHandler, 300));
 
-//sorting
+
+//Sorting of products by Name, Id and Price.
+
 const sortFeilds = document.querySelectorAll("th i");
 sortFeilds.forEach((feild) => {
   feild.addEventListener("click", (e) => {

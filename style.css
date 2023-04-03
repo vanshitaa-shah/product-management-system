@@ -1,8 +1,10 @@
+/* Global Variable declaration */
 :root {
   --primary_color: #2874f0;
   --secondary-color: rgb(255, 166, 0);
 }
 
+/* Universal classes */
 * {
   margin: 0;
   padding: 0;
@@ -18,10 +20,12 @@ body {
   font-family: sans-serif;
 }
 
+/* reset Classes */
 button {
   border: none !important;
   cursor: pointer;
 }
+
 a {
   text-decoration: none;
 }
@@ -30,33 +34,22 @@ input {
   outline: none;
   border: none;
 }
+
 i {
   cursor: pointer;
 }
-.header {
-  width: 100%;
-  padding: 10px 30px;
-  background-color: var(--primary_color);
-}
 
-h5 {
-  font-weight: bold;
-  font-size: 20px;
-}
-
+/* custom CSS */
 .main-container {
   width: 500px;
   cursor: default;
   position: relative;
 }
-/* .main-container input,
-.main-container textarea {
-  cursor: not-allowed;
-} */
 
 #productForm label {
   color: rgb(144, 144, 144);
 }
+
 #productForm label span {
   color: rgb(202, 98, 98);
 }
@@ -64,14 +57,17 @@ h5 {
 #backBtn {
   color: var(--primary_color);
 }
+
 #backBtn:hover {
   color: #125cd4;
 }
+
 #productPhoto {
   height: fit-content;
   width: 80%;
   margin-right: 15px;
 }
+  
 .search-bar {
   border: 1px solid var(--secondary-color);
   border-radius: 8px;
@@ -79,6 +75,7 @@ h5 {
 .search-bar input {
   width: 100%;
 }
+
 thead,
 tr {
   display: table;
